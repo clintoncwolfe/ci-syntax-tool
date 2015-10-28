@@ -25,9 +25,8 @@ namespace :test do
 
   desc 'Run RuboCop'
   RuboCop::RakeTask.new(:rubocop) do |task|
-    task.patterns = ['bin/*']
-    task.patterns = ['lib/**/*.rb']
-    task.patterns = ['Rakefile']
+    task.options = ['-c', 'rubocop.yml']
+    task.patterns = ['bin/*', 'lib/**/*.rb', 'Rakefile']
   end
 
   Cucumber::Rake::Task.new(:features) do |t|
