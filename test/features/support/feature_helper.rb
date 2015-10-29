@@ -1,6 +1,8 @@
 require_relative '../../../lib/ci-syntax-tool'
 require 'minitest'
 
+require 'byebug'
+
 module CI
   module Syntax
     module Tool
@@ -42,7 +44,7 @@ module CI
 
         def list_cli_opts
           return [
-            {        l: 'version', d: 'Show version'},
+            {s: 'V', l: 'version', d: 'Show ci-syntax-tool version'},
             {s: 'h', l: 'help',    d: 'Show this help message'},            
           ]          
         end
@@ -50,8 +52,9 @@ module CI
         def assert_usage_message
           list_cli_opts.each do |opt|
             re = '\s+'
-            re += '-' if opt[:s]
+            re += '-'     if opt[:s]
             re += opt[:s] if opt[:s]
+            re += ','     if opt[:s]
             re += '\s+'
             re += '--' + opt[:l]
             re += '\s+'

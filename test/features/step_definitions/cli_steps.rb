@@ -1,10 +1,6 @@
 Given(/^I have installed the tool$/) do
 end
 
-When(/^I run it on the command line with no arguments$/) do
-  @run_result = run_check([])
-end
-
 # TODO: Add code to target fixture directory by default
 When(/^I run it on the command line with the ([^ ]+) option$/) do |option|
   options = []
