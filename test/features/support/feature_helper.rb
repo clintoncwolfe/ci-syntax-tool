@@ -45,8 +45,15 @@ module CI
         def list_cli_opts
           return [
             {s: 'V', l: 'version', d: 'Show ci-syntax-tool version'},
-            {s: 'h', l: 'help',    d: 'Show this help message'},            
+            {s: 'h', l: 'help',    d: 'Show this help message'},
+            {s: 'l', l: 'lang LANG',    d: 'Select this language for checking.  Repeatable.  Default, all languages.'},
+            {        l: 'list-languages',    d: 'List available languages and exit.'},
           ]          
+        end
+
+        def list_languages
+          return [            
+          ]
         end
         
         def assert_usage_message
@@ -64,6 +71,13 @@ module CI
           end
           # TODO - check for spurious options?
         end
+
+        def assert_language_list
+          seen = @run_result[:stdout].split("\n").sort
+          expected = list_languages.sort
+          assert_equal(expected, seen, 'The list of supported languages should match')
+        end
+
         
       end
     end
