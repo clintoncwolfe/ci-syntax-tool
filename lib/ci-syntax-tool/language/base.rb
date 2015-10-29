@@ -6,6 +6,11 @@ module CI
         #  Base class for syntax checkers.  Sketches out the
         #  API you need if you want to add a language.
         class Base
+
+          # Args is a hash, contents unspecified as yet.
+          def initialize(args)
+          end
+          
           def self.descendant_classes
             # Fairly expensive call...
             ObjectSpace.each_object(Class).select { |klass| klass < self }

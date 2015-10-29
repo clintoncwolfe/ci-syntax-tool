@@ -32,6 +32,14 @@ RSpec.describe CI::Syntax::Tool::LanguageFactory, "#all_language_names" do
       expect(lang_names).to include(lang)
     end
   end
-
+  
 end
 
+RSpec.describe CI::Syntax::Tool::LanguageFactory, "#create" do
+  it "should be able to create one of each language with no args" do
+    CI::Syntax::Tool::LanguageFactory.all_language_names.each do |lang_name|      
+      lang_obj = CI::Syntax::Tool::LanguageFactory.create(lang_name)
+      expect(lang_obj).to be_kind_of CI::Syntax::Tool::Language::Base
+    end
+  end
+end

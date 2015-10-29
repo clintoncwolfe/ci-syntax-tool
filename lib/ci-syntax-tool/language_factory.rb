@@ -31,6 +31,11 @@ module CI
         def self.valid_language?(proposed)
           all_languages.names.include?(proposed)
         end
+
+        def self.create(lang_name, args = {})
+          const_get('CI::Syntax::Tool::Language::' + lang_name).new(args)
+        end
+        
       end
     end
   end
