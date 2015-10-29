@@ -2,11 +2,11 @@
 
 require 'rake'
 require 'bundler'
-require 'rake/testtask'
 require 'bundler/gem_tasks'
 require 'cucumber'
 require 'cucumber/rake/task'
 require 'rubocop/rake_task'
+require 'rspec/core/rake_task'
 
 namespace :test do
   desc 'Checks ruby files for syntax errors'
@@ -18,8 +18,7 @@ namespace :test do
   end
 
   desc 'Run unit tests'
-  Rake::TestTask.new do |t|
-    t.name = 'unit'
+  RSpec::Core::RakeTask.new(:unit) do |t|
     t.pattern = 'test/unit/**/*_spec.rb'
   end
 
