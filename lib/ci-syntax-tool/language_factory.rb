@@ -1,3 +1,12 @@
+
+# Load base class first
+require_relative 'language/base'
+
+# Load all core languages
+Dir.glob(File.dirname(__FILE__) + '/language/*.rb') do |file|
+  require_relative file
+end
+
 module CI
   module Syntax
     module Tool
@@ -5,11 +14,22 @@ module CI
       #   Identifies and loads the Language classes, and
       # creates instances as needed.
       class LanguageFactory
-        def self.all_languages
-          []
+        
+        def self.all_language_classes
+          Language::Base.descendant_classes
         end
+
+        def self.all_language_names
+          class_names = all_language_classes.map(&:name)
+          short_names = class_names.map do |name|
+            name.split('::').last
+          end
+          puts short_names.inspect
+          short_names
+        end
+
         def self.valid_language?(proposed)
-          all_languages.map(&:name).include?(proposed)
+          all_languages.names.include?(proposed)
         end
       end
     end
