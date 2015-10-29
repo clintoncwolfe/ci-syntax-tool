@@ -35,11 +35,15 @@ module CI
           $stdout = old_stdout
           $stderr = old_stderr
 
-          return {
+          result = {
             stdout: sio_out.string,
             stderr: sio_err.string,
             exit_status: exit_status
           }
+
+          #puts result.inspect
+          return result
+          
         end
 
         def list_cli_opts

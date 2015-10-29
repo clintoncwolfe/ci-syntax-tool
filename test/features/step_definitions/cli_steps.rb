@@ -37,5 +37,5 @@ end
 
 Then(/^I should get an error message and the exit code (\d+)$/) do |expected_exit_status|
   refute_empty(@run_result[:stderr], 'Expected to see an error message on STDERR')
-  assert_equal(expected_exit_status, @run_result[:exit_status])
+  assert_equal(expected_exit_status.to_i, @run_result[:exit_status])
 end

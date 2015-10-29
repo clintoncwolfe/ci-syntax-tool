@@ -1,2 +1,11 @@
 Style/FileName:
   Enabled: False
+
+Metrics/MethodLength:
+  Max: 25
+
+Style/TrailingWhitespace:
+  Enabled: False
+
+Style/TrailingComma:
+  Enabled: False
