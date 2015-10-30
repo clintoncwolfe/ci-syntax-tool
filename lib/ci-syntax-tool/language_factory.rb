@@ -28,7 +28,7 @@ module CI
         end
 
         def self.valid_language?(proposed)
-          all_languages.names.include?(proposed)
+          all_language_names.include?(proposed)
         end
 
         def self.create(lang_name, args = {})

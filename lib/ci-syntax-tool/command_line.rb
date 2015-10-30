@@ -89,12 +89,8 @@ module CI
         end
 
         def list_languages
-          langs = LanguageFactory.all_languages
-          langs = langs.sort do |a, b|
-            a.name <=> b.name
-          end
-          langs.each do |lang|
-            puts lang.name
+          LanguageFactory.all_language_names.sort.each do |lang_name|
+            puts lang_name
           end
           @runnable = false
         end
