@@ -1,3 +1,6 @@
+
+require 'optparse'
+
 module CI
   module Syntax
     module Tool
@@ -9,6 +12,7 @@ module CI
         attr_accessor :non_runnable_exit_status
         attr_reader :languages
         attr_reader :formatters
+        attr_reader :options
         
         def initialize(args)
           @args = args.dup
@@ -36,7 +40,7 @@ module CI
         
         # rubocop: disable MethodLength
         def make_parser
-          OptionParser.new do |opts|
+          ::OptionParser.new do |opts|
             opts.banner = 'ci-syntax-tool [options] [path]'
 
             opts.on('-V', '--version',

@@ -36,8 +36,9 @@ module CI
           
           # Called once for each file being checked.  
           # path [String] - path to filename to check
+          # file_result [Result::File] - Results object for the outcome.
           # Returns: Result::File
-          def check_file(_path)
+          def check_file(_path, _file_result)
             fail
           end
           

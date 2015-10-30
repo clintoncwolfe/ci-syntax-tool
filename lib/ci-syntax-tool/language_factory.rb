@@ -24,7 +24,6 @@ module CI
           short_names = class_names.map do |name|
             name.split('::').last
           end
-          puts short_names.inspect
           short_names
         end
 
