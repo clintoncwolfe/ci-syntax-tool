@@ -55,11 +55,16 @@ module CI
           ]          
         end
 
-        def list_languages
+        def list_core_languages
           return [            
           ]
         end
-        
+
+        def list_core_formats
+          return [            
+          ]
+        end
+
         def assert_usage_message
           list_cli_opts.each do |opt|
             re = '\s+'
@@ -78,8 +83,14 @@ module CI
 
         def assert_language_list
           seen = @run_result[:stdout].split("\n").sort
-          expected = list_languages.sort
+          expected = list_core_languages.sort
           assert_equal(expected, seen, 'The list of supported languages should match')
+        end
+
+        def assert_format_list
+          seen = @run_result[:stdout].split("\n").sort
+          expected = list_core_formats.sort
+          assert_equal(expected, seen, 'The list of supported formats should match')
         end
 
         
