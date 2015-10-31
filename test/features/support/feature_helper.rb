@@ -52,6 +52,10 @@ module CI
             {s: 'h', l: 'help',    d: 'Show this help message'},
             {s: 'l', l: 'lang LANG',    d: 'Select this language for checking.  Repeatable.  Default, all languages.'},
             {        l: 'list-languages',    d: 'List available languages and exit.'},
+            {s: 'f', l: 'format FORMAT',    d: 'Use this format for output.  Repeatable, but if repeated, must have an equal number of --dest options.'},
+            {s: 'o', l: 'output-path PATH',    d: 'Write formatted output to this location.  Use "-" to represent STDOUT.  Defaults to STDOUT if zero or one --format option used.  Repeatable with an equal number of --format options.'},
+            {        l: 'list-formats',    d: 'List available formats and exit.'},
+            {s: 'r', l: 'require RUBYFILE', d: 'Load additional Ruby code, perhaps for a custom language or format.  Repeatable.'},
           ]          
         end
 
@@ -93,6 +97,15 @@ module CI
           assert_equal(expected, seen, 'The list of supported formats should match')
         end
 
+        def assert_class_loaded(klass)
+          begin
+            Kernel.const_get(klass)
+          rescue NameError => e
+            flunk("Expected Class #{klass} to have been loaded")
+          else
+            raise e
+          end
+        end
         
       end
     end
