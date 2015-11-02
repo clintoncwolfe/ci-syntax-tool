@@ -1,14 +1,14 @@
 When(/^I run it on the command line with the require option and a (valid|invalid|missing) ruby file$/) do |require_file|
   options = [
-    '--require', 'test/fixtures/require/' + require_file + '.rb'
+    '--require', Dir.pwd + '/' + 'test/fixtures/require/' + require_file + '.rb',
   ]
   @run_result = run_check(options)
 end
 
 When(/^I run it on the command line with two requires$/) do
   options = [
-    '--require', 'test/fixtures/require/valid.rb',
-    '--require', 'test/fixtures/require/second.rb',
+    '--require', Dir.pwd + '/' + 'test/fixtures/require/valid.rb',
+    '--require', Dir.pwd + '/' + 'test/fixtures/require/second.rb',
   ]
   @run_result = run_check(options)
 end

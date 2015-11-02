@@ -117,8 +117,16 @@ module CI
           @options[:requires].each do |require_path|
 
             if File.exist?(require_path)
-
-
+              begin
+                path = require_path.sub(/\.rb$/,'')
+                require require_path
+              rescue Exception => e # TODO: probably bad idea to catch this
+                # TODO: cosider adding a --debug flag to allow dumping the stacktrace.
+                $stderr.puts "Could not load #{require_path} because it appears to be invalid."
+                @runnable = false
+                @non_runnable_exit_status = 5                
+                break
+              end
             else
               $stderr.puts "Could not load #{require_path} because it appears to be missing."
               @runnable = false
