@@ -52,10 +52,11 @@ module CI
             {s: 'h', l: 'help',    d: 'Show this help message'},
             {s: 'l', l: 'lang LANG',    d: 'Select this language for checking.  Repeatable.  Default, all languages.'},
             {        l: 'list-languages',    d: 'List available languages and exit.'},
-            #{s: 'f', l: 'format FORMAT',    d: 'Use this format for output.  Repeatable, but if repeated, must have an equal number of --dest options.'},
-            #{s: 'o', l: 'output-path PATH',    d: 'Write formatted output to this location.  Use "-" to represent STDOUT.  Defaults to STDOUT if zero or one --format option used.  Repeatable with an equal number of --format options.'},
-            #{        l: 'list-formats',    d: 'List available formats and exit.'},
+            {s: 'f', l: 'format FORMAT',    d: 'Use this format for output.  Repeatable, but if repeated, must have an equal number of --output options.'},
+            {s: 'o', l: 'output PATH',    d: 'Write formatted output to this location.  Use "-" to represent STDOUT.  Defaults to STDOUT if zero or one --format option used.  Repeatable with an equal number of --format options.'},
+            {        l: 'list-formats',    d: 'List available formats and exit.'},
             {s: 'r', l: 'require RUBYFILE', d: 'Load additional Ruby code, perhaps for a custom language or format.  Repeatable.'},
+            {s: 'd', l: 'debug', d: 'Provide debug-level output to STDOUT.'},
           ]          
         end
 

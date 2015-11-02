@@ -21,6 +21,8 @@ module CI
           @options = {
             languages: [],
             requires: [],
+            formats: [],
+            outputs: [],
           }
           
           @parser = make_parser
@@ -66,11 +68,39 @@ module CI
               @options[:list_languages] = true
             end
 
+            opts.on('-d', '--debug',
+                    'Provide debug-level output to STDOUT.') do
+              @options[:debug] = true
+            end
+
             opts.on('-r', '--require RUBYFILE',
                     'Load additional Ruby code, perhaps for a custom ' \
                     'language or format.  Repeatable.') do |r|
               @options[:requires] << r
             end
+
+            opts.on('-f', '--format FORMAT',
+                    'Use this format for output.  Repeatable, but if ' \
+                    'repeated, must have an equal number of --output ' \
+                    'options.') do |fmt|
+              @options[:formats] << fmt
+            end
+
+            opts.on('-o', '--output PATH',
+                    'Write formatted output to this location.  Use "-" '\
+                    'to represent STDOUT.  Defaults to STDOUT if zero or ' \
+                    'one --format option used.  Repeatable with an equal ' \
+                    'number of --format options.') do |path|
+              @options[:outputs] << path
+            end
+
+            opts.on('--list-formats',
+                    'List available formats and exit.') do
+              @options[:list_formats] = true
+            end
+
+
+            
           end
         end
         # rubocop: enable MethodLength
@@ -120,8 +150,12 @@ module CI
               begin
                 path = require_path.sub(/\.rb$/,'')
                 require require_path
-              rescue Exception => e # TODO: probably bad idea to catch this
-                # TODO: cosider adding a --debug flag to allow dumping the stacktrace.
+              rescue Exception => e 
+                if options[:debug]
+                  $stderr.puts e.class.name
+                  $stderr.puts e.to_s
+                  $stderr.puts e.backtrace.join("\n")
+                end
                 $stderr.puts "Could not load #{require_path} because it appears to be invalid."
                 @runnable = false
                 @non_runnable_exit_status = 5                

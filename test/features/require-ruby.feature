@@ -22,6 +22,12 @@ Feature: Load extra Ruby files
      Then I should get an error message about the invalid require file
      And I should get a 5 exit code
 
+Scenario: Reject an invalid file with a stacktrace when debug flag is present
+    Given I have installed the tool
+     When I run it on the command line with the require option and the debug option and a invalid ruby file
+     Then I should get a stack trace about the invalid require file
+     And I should get a 5 exit code
+
   Scenario: Accept multiple requires
     Given I have installed the tool
      When I run it on the command line with two requires
