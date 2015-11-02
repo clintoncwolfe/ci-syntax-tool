@@ -19,12 +19,14 @@ module CI
           @runnable = true
           @non_runnable_exit_status = 0
           @options = {
-            languages: [],            
+            languages: [],
+            requires: [],
           }
           
           @parser = make_parser
 
           parse_args
+          load_requires if runnable?
           validate_languages if runnable?
           list_languages if runnable? && @options[:list_languages]
           
@@ -62,6 +64,12 @@ module CI
             opts.on('--list-languages',
                     'List available languages and exit.') do
               @options[:list_languages] = true
+            end
+
+            opts.on('-r', '--require RUBYFILE',
+                    'Load additional Ruby code, perhaps for a custom ' \
+                    'language or format.  Repeatable.') do |r|
+              @options[:requires] << r
             end
           end
         end
@@ -102,6 +110,21 @@ module CI
             $stderr.puts "'#{lang_opt}' is not a valid language"
             @runnable = false
             @non_runnable_exit_status = 3
+          end
+        end
+
+        def load_requires
+          @options[:requires].each do |require_path|
+
+            if File.exist?(require_path)
+
+
+            else
+              $stderr.puts "Could not load #{require_path} because it appears to be missing."
+              @runnable = false
+              @non_runnable_exit_status = 5
+              break
+            end
           end
         end
         
