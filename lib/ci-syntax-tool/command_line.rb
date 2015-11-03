@@ -30,8 +30,10 @@ module CI
           parse_args
           load_requires if runnable?
           validate_languages if runnable?
+          validate_formats if runnable?
           list_languages if runnable? && @options[:list_languages]
-          
+          list_formats if runnable? && @options[:list_formats]
+
         end
 
         # rubocop: disable Style/TrivialAccessors
@@ -133,6 +135,13 @@ module CI
           @runnable = false
         end
 
+        def list_formats
+          FormatFactory.all_format_names.sort.each do |fmt_name|
+            puts fmt_name
+          end
+          @runnable = false
+        end
+
         def validate_languages
           @options[:languages].each do |lang_opt|
             next if LanguageFactory.valid_language?(lang_opt)
@@ -143,13 +152,39 @@ module CI
           end
         end
 
+        def validate_formats
+          
+          # If there are zero formats, assume 'Progress'
+          @options[:formats] << 'Progress' if @options[:formats].empty?
+          
+          @options[:formats].each do |lang_opt|
+            next if FormatFactory.valid_format?(lang_opt)
+            
+            $stderr.puts "'#{lang_opt}' is not a valid format"
+            @runnable = false
+            @non_runnable_exit_status = 4
+            return
+          end
+
+          # If there are zero outputs, assume '-'
+          @options[:outputs] << '-' if @options[:outputs].empty?
+          
+          # Insist that the number of outputs
+          # match the number of formats
+          unless @options[:outputs].length == @options[:formats].length
+            $stderr.puts "Must have exactly the same number of outputs as formats."
+            @runnable = false
+            @non_runnable_exit_status = 4
+          end
+          
+        end
+
         def load_requires
           @options[:requires].each do |require_path|
 
             if File.exist?(require_path)
               begin
-                path = require_path.sub(/\.rb$/,'')
-                require require_path
+                Kernel.require(require_path)
               rescue Exception => e 
                 if options[:debug]
                   $stderr.puts e.class.name

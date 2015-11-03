@@ -41,7 +41,6 @@ module CI
             exit_status: exit_status
           }
 
-          # puts result.inspect # DEBUG
           return result
           
         end
@@ -66,7 +65,8 @@ module CI
         end
 
         def list_core_formats
-          return [            
+          return [
+            'Progress',
           ]
         end
 

@@ -24,7 +24,7 @@ Feature: Pluggable formatters
      When I run it on the command line with two format options and 1 destinations
      Then I should get an error message and the exit code 4
 
-  Scenario: Use multiple formatters with corrrect nnumber of destinations
+  Scenario: Use multiple formatters with correct number of destinations
     Given I have installed the tool
      When I run it on the command line with two format options and 2 destinations
      Then I should get a 0 exit code
