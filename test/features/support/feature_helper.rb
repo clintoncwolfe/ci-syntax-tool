@@ -25,9 +25,12 @@ module CI
           old_stderr = $stderr
           $stderr = sio_err
 
+          overall_result = nil
           cli_opts = CI::Syntax::Tool::CommandLine.new(command_line_args)
           if cli_opts.runnable?
-            exit_status = CI::Syntax::Tool::Checker.new(cli_opts).run()
+            checker = CI::Syntax::Tool::Checker.new(cli_opts)
+            exit_status = checker.run()
+            overall_result = checker.overall_result
           else
             exit_status = cli_opts.non_runnable_exit_status
           end
@@ -38,7 +41,8 @@ module CI
           result = {
             stdout: sio_out.string,
             stderr: sio_err.string,
-            exit_status: exit_status
+            exit_status: exit_status,
+            result: overall_result,
           }
 
           return result
@@ -60,7 +64,8 @@ module CI
         end
 
         def list_core_languages
-          return [            
+          return [
+            'YAML',
           ]
         end
 

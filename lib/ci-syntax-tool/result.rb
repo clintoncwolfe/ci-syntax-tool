@@ -47,6 +47,16 @@ module CI
               total += result.error_count
             end
           end
+
+          def file_paths
+            files = []
+            language_results.each do |lr|
+              lr.file_results do |fr|
+                files << fr.path
+              end
+            end
+            files
+          end
           
         end
         

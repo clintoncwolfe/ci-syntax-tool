@@ -7,13 +7,14 @@ module CI
       #  to each formatter.
       class Checker
         attr_reader :cmd_line
+        attr_reader :overall_result
 
         def initialize(cmd_line)
           @cmd_line = cmd_line
         end
 
         def run
-          overall_result = Result::OverallResult.new()
+          @overall_result = Result::OverallResult.new()
           cmd_line.options[:languages].each do |lang_name|
             language_result = overall_result.add_language_result(lang_name)
             lang = LanguageFactory.create(lang_name)

@@ -28,6 +28,7 @@ RSpec.describe CI::Syntax::Tool::FormatFactory, "#all_format_names" do
   it "should include the expected format names" do
     lang_names = CI::Syntax::Tool::FormatFactory.all_format_names
     [
+      'Progress',
     ].each do |lang|
       expect(lang_names).to include(lang)
     end

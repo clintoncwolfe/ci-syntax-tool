@@ -28,6 +28,7 @@ RSpec.describe CI::Syntax::Tool::LanguageFactory, "#all_language_names" do
   it "should include the expected language names" do
     lang_names = CI::Syntax::Tool::LanguageFactory.all_language_names
     [
+      'YAML',
     ].each do |lang|
       expect(lang_names).to include(lang)
     end

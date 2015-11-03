@@ -24,11 +24,13 @@ module CI
           short_names = class_names.map do |name|
             name.split('::').last
           end
-          short_names
+          public_names = short_names.reject {|e| e == 'MockFormat'}
+          public_names
         end
 
         def self.valid_format?(proposed)
-          all_format_names.include?(proposed)
+          permitted_names = all_format_names << 'MockFormat'
+          permitted_names.include?(proposed)
         end
 
         def self.create(lang_name, io, args = {})
