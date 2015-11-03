@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require 'ci-syntax-tool'
+module CI
+  module Syntax
+    # CI::Syntax::Tool - binstub
+    module Tool
+      cmd_line = CommandLine.new(ARGV)
+      status = Checker.new(cmd_line).run
+      exit status.to_i
+    end
+  end
+end
