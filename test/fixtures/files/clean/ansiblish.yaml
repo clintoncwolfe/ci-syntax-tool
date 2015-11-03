@@ -1,0 +1,12 @@
+---
+- name: A pretend play
+  hosts: the_mostest
+  tasks:
+    - name: Do something
+      command: tap-dance to stardom
+
+    - name: touch something
+      file:
+        path: /tmp/hearts-and-minds-of-our-nations-youth
+        action: touch
+        
