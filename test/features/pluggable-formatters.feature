@@ -29,4 +29,14 @@ Feature: Pluggable formatters
      When I run it on the command line with two format options and 2 destinations
      Then I should get a 0 exit code
 
+  Scenario: Create destination files automatically
+    Given I have installed the tool
+     When I run it on the command line with a destination in the current directory
+     Then the file should be created
+
+  Scenario: Create destination directories automatically
+    Given I have installed the tool
+     When I run it on the command line with a destination in a directory that does not exist
+     Then the file should be created
+
 
