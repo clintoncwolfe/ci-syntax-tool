@@ -13,6 +13,7 @@ module CI
         attr_reader :languages
         attr_reader :formatters
         attr_reader :options
+        attr_reader :file_args
         
         def initialize(args)
           @args = args.dup
@@ -24,10 +25,12 @@ module CI
             formats: [],
             outputs: [],
           }
+          @file_args = []
           
           @parser = make_parser
 
           parse_args
+          validate_file_args if runnable?
           load_requires if runnable?
           validate_languages if runnable?
           validate_formats if runnable?
@@ -101,8 +104,6 @@ module CI
               @options[:list_formats] = true
             end
 
-
-            
           end
         end
         # rubocop: enable MethodLength
@@ -122,6 +123,7 @@ module CI
           else
             begin
               @parser.parse!(@args)
+              @file_args = @args
             rescue OptionParser::InvalidOption => e
               e.recover @args
             end
@@ -149,9 +151,25 @@ module CI
             $stderr.puts "'#{lang_opt}' is not a valid language"
             @runnable = false
             @non_runnable_exit_status = 3
+            break
           end
+
+          # If no languages were specified, do all languages
+          @options[:languages] = LanguageFactory.all_language_names if @options[:languages].empty?
         end
 
+        def validate_file_args
+          # TODO: need feature tests on this
+          file_args.each do |path|
+            next if File.exist?(path)
+            $stderr.puts "'#{path}' does not exist"
+            @runnable = false
+            @non_runnable_exit_status = 6
+            break
+          end
+          file_args << '.' if file_args.empty?
+        end
+          
         def validate_formats
           
           # If there are zero formats, assume 'Progress'

@@ -50,8 +50,8 @@ module CI
 
           def file_paths
             files = []
-            language_results.each do |lr|
-              lr.file_results do |fr|
+            language_results.each do |ln, lr|
+              lr.file_results.each do |fp, fr|
                 files << fr.path
               end
             end
