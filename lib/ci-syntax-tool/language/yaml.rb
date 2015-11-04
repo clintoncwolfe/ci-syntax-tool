@@ -25,8 +25,13 @@ module CI
           def check_file(file_result)
             begin
               ::YAML.load(File.read(file_result.path))
-            rescue StandardError => e
-              fail 
+            rescue Psych::SyntaxError => e
+              file_result.add_issue(
+                line_number: e.line,
+                character: e.column,
+                level: :error,
+                raw_message: e.problem,
+              )
             end
           end
         end
