@@ -20,9 +20,20 @@ module CI
             lang = LanguageFactory.create(lang_name)
             
             lang.check_starting(language_result)
-            Dir.glob(lang.combined_globs).each do |path|
-              file_result = language_result.add_file_result(path)
-              lang.check_file(path, file_result)
+
+            cmd_line.file_args.each do |argpath|
+              if FileTest.directory?(argpath)
+                Dir.chdir(argpath) do                  
+                  Dir.glob(lang.combined_globs).each do |path|
+                    file_result = language_result.add_file_result(path)
+                    lang.check_file(file_result)
+                  end
+                end
+              else
+                # No glob check here - user explicitly specified a file
+                file_result = language_result.add_file_result(argpath)
+                lang.check_file(file_result)
+              end
             end
             lang.check_ending(language_result)
           end

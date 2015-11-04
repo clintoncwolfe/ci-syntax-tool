@@ -17,6 +17,8 @@ module CI
         
         def run_check(command_line_args)
 
+          # puts "RAW CLI: " + command_line_args.inspect # DEBUG
+          
           # Capture any stdout and stderr
           sio_out = StringIO.new
           old_stdout = $stdout
@@ -27,6 +29,7 @@ module CI
 
           overall_result = nil
           cli_opts = CI::Syntax::Tool::CommandLine.new(command_line_args)
+          # puts "COOKED CLI: " + cli_opts.options.inspect # DEBUG
           if cli_opts.runnable?
             checker = CI::Syntax::Tool::Checker.new(cli_opts)
             exit_status = checker.run()
@@ -42,9 +45,9 @@ module CI
             stdout: sio_out.string,
             stderr: sio_err.string,
             exit_status: exit_status,
-            result: overall_result,
+            overall_result: overall_result,
           }
-
+          puts "Results: " + result.inspect # DEBUG
           return result
           
         end
@@ -111,6 +114,22 @@ module CI
           rescue StandardError => e
             raise
           end
+        end
+
+        def files_matching_language(files, lang_name)
+          globs = LanguageFactory.create(lang_name).combined_globs
+          matches = []
+          globs.each do |glob|
+            re = glob.gsub('.', '\.')
+            re = glob.gsub('**/', '.+')
+            re = re.gsub('*', '.+')
+            re += '$'
+            re = Regexp.new(re)
+            files.select {|fn1| fn1.match(re) }.each do |fn2|
+              matches << fn2
+            end
+          end
+          matches
         end
         
       end
