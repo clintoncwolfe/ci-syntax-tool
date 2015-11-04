@@ -34,6 +34,14 @@ module CI
         end
 
         def self.create(lang_name, io, args = {})
+          unless io.respond_to? :puts
+            if io == '-'
+              io = $stdout
+            else
+              io = File.open(io)
+            end
+          end
+            
           const_get('CI::Syntax::Tool::Format::' + lang_name).new(io, args)
         end
         

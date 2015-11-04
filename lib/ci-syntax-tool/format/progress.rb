@@ -11,25 +11,20 @@ module CI
             super
           end
           
-          # Called once at the beginning of the check with the LanguageResult object.
-          def started(_lang_result)
-            io.puts
-          end
-
           # Called once at the beginning of the check on a file.
           def file_finished(file_result)
             if file_result.error_count > 0  
-              io.print 'x'
+              out.print 'x'
             elsif file_result.warning_count > 0
-              io.print '*'
+              out.print '*'
             else
-              io.print '.'
+              out.print '.'
             end
           end
 
           # Invoked after all files are inspected, or interrupted by user.
           def finished(_lang_result)
-            io.puts
+            out.puts
           end          
         end
       end
