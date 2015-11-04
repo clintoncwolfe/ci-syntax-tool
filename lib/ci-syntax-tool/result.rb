@@ -82,10 +82,18 @@ module CI
 
           def warning_count
             file_results.inject(0) do |total, (path,result)|
-              total += result.error_count
+              total += result.warning_count
             end
           end
+  
+          def warning_file_results
+            file_results.values.select { |fr| fr.warning_count > 0 }
+          end
           
+          def error_file_results
+            file_results.values.select { |fr| fr.error_count > 0 }
+          end
+        
         end
         
         class FileResult < Result
@@ -103,13 +111,21 @@ module CI
           end
 
           def warning_count
-            issues.select { |i| i.level == :warning }.count
+            warnings.count
           end
 
           def error_count
-            issues.select { |i| i.level == :error }.count
+            errors.count
           end
 
+          def warnings 
+            issues.select { |i| i.level == :warning }
+          end
+
+          def errors 
+            issues.select { |i| i.level == :error }
+          end
+          
         end
         
       end
