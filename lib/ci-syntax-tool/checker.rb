@@ -21,13 +21,14 @@ module CI
           end
           
           @overall_result = Result::OverallResult.new()
+          formats.each { |fmt| fmt.overall_started(overall_result) }
           
           cmd_line.options[:languages].each do |lang_name|
             language_result = overall_result.add_language_result(lang_name)
             lang = LanguageFactory.create(lang_name)
             
             lang.check_starting(language_result)
-            formats.each { |fmt| fmt.started(language_result) }
+            formats.each { |fmt| fmt.lang_started(language_result) }
             
             cmd_line.file_args.each do |argpath|
               if FileTest.directory?(argpath)
@@ -48,9 +49,10 @@ module CI
               end
             end
             lang.check_ending(language_result)
-            formats.each { |fmt| fmt.finished(language_result) }
+            formats.each { |fmt| fmt.lang_finished(language_result) }
           end
 
+          formats.each { |fmt| fmt.overall_finished(overall_result) }
           return overall_result.report_failure? ? 1 : 0
           
         end
