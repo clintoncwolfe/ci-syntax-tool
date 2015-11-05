@@ -64,6 +64,22 @@ This might be good enough for a commit hook.
 
 If a file doesn't have an extension that would match the usual glob, you can specify one or more filenames, bypassing the globbing mechanism.  Use --lang to keep it restricted to only the language you know you want.  Again, the default Progress format sends a report to STDOUT.
 
+## Rake Support
+
+The gem includes a Rake Task, which you can use in your rakefiles.
+
+    require 'ci-syntax-tool/rake_task'
+
+    # Gives you a 'syntax' task, just like running CLI with defaults
+    CI::Syntax::Tool::RakeTask.new()
+
+    # Bells and whistles - I like this for CI
+    CI::Syntax::Tool::RakeTask.new('myname') do |taskdef|
+      taskdef.formats = [ 'Progress', 'JUnit' ]
+      taskdef.outputs = [ '-', 'test/reports/syntax.xml' ]
+      taskdef.options = [ '--anything', '--else']
+    end
+
 ## Language Syntax Plugins
 
 So far, we support:
