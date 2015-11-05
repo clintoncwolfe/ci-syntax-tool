@@ -1,0 +1,16 @@
+require 'ci-syntax-tool/rake_task'
+
+# All defaults - should be 'syntax'
+CI::Syntax::Tool::RakeTask.new
+
+
+CI::Syntax::Tool::RakeTask.new('renamed')
+
+desc 'Alt description'
+CI::Syntax::Tool::RakeTask.new('altdesc')
+
+CI::Syntax::Tool::RakeTask.new('prog-junit') do |t|
+  t.formats = [ 'Progress', 'JUnit' ]
+  t.outputs = [ '-', 'test/tmp/rake-out-1.out' ]
+end
+
