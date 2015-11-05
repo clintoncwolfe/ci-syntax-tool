@@ -74,6 +74,7 @@ module CI
 
         def list_core_formats
           return [
+            'JUnit',
             'Progress',
           ]
         end

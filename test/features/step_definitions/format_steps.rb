@@ -34,7 +34,9 @@ end
 
 When(/^I run it on the command line with the ([^ ]+) format on ([^ ]+) files$/) do |fmt_name, fixture|
   path = "test/tmp/#{fmt_name}.out"
+  FileUtils.rm_f path
   options = [
+    '--format', fmt_name,
     '--output', path,
     '--lang', 'YAML',
     "test/fixtures/files/#{fixture}",
