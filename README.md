@@ -70,13 +70,15 @@ The gem includes a Rake Task, which you can use in your rakefiles.
 
     require 'ci-syntax-tool/rake_task'
 
-    # Gives you a 'syntax' task, just like running CLI with defaults
+    # Gives you a 'syntax' task, just like running CLI with defaults:
+    # all languages, Progress format to STDOUT
     CI::Syntax::Tool::RakeTask.new()
 
     # Bells and whistles - I like this for CI
     CI::Syntax::Tool::RakeTask.new('myname') do |taskdef|
       taskdef.formats = [ 'Progress', 'JUnit' ]
       taskdef.outputs = [ '-', 'test/reports/syntax.xml' ]
+      taskdef.languages = [ 'YAML', 'Ruby' ] # Default all - only specify to restrict
       taskdef.options = [ '--anything', '--else']
     end
 
