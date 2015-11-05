@@ -44,7 +44,7 @@ module CI
 
           def warning_count
             language_results.inject(0) do |total, (lang,result)|
-              total += result.error_count
+              total += result.warning_count
             end
           end
 

@@ -5,6 +5,7 @@ When(/^I run it on the command line with the require option (and the debug optio
   if need_debug then
     options << '--debug'
   end
+  options << 'test/fixtures/files/clean'
   @run_result = run_check(options)
 end
 
@@ -13,6 +14,7 @@ When(/^I run it on the command line with two requires$/) do
     '--require', Dir.pwd + '/' + 'test/fixtures/require/valid.rb',
     '--require', Dir.pwd + '/' + 'test/fixtures/require/second.rb',
   ]
+  options << 'test/fixtures/files/clean'
   @run_result = run_check(options)
 end
 

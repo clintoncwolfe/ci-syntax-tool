@@ -1,4 +1,6 @@
 
+require 'fileutils'
+
 # Load base class first
 require_relative 'format/base'
 
@@ -38,7 +40,9 @@ module CI
             if io == '-'
               io = $stdout
             else
-              io = File.open(io)
+              # Ensure containing dir exists
+              FileUtils.mkdir_p File.dirname(io)
+              io = File.open(io, File::WRONLY | File::CREAT)
             end
           end
             

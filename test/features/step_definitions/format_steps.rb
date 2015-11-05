@@ -10,6 +10,7 @@ When(/^I run it on the command line with two format options and (\d) destination
     options << '--output'
     options << 'test/tmp/dest-' + i.to_s
   end
+  options << 'test/fixtures/files/clean'
   @run_result = run_check(options)
 end
 
@@ -26,6 +27,7 @@ When(/^I run it on the command line with a destination in (the current directory
     FileUtils.rm_f dir
     options << dir + '/' + path
   end
+  options << 'test/fixtures/files/clean'
   @expected_output_paths = [ path ]
   @run_result = run_check(options)
 end
@@ -35,7 +37,7 @@ Then(/^I should get a list of the core formats along with a zero exit code$/) do
   assert_format_list
 end
 
-Then(/^the file(:?s)? should be created$/) do
+Then(/^the file(?:s)? should be created$/) do
   @expected_output_paths.each do |path|
     assert(File.exist?(path), "#{path} should exist")
   end

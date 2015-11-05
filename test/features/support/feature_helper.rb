@@ -47,7 +47,7 @@ module CI
             exit_status: exit_status,
             overall_result: overall_result,
           }
-          puts "Results: " + result.inspect # DEBUG
+          # puts "Results: " + result.inspect # DEBUG
           return result
           
         end
