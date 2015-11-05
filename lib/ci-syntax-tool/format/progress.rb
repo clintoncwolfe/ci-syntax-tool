@@ -11,7 +11,7 @@ module CI
             super
           end
 
-          def started(lang_result)
+          def lang_started(lang_result)
             out.puts "Starting syntax scan for #{lang_result.language_name}..."
           end
           
@@ -27,7 +27,7 @@ module CI
           end
 
           # Invoked after all files are inspected, or interrupted by user.
-          def finished(lang_result)
+          def lang_finished(lang_result)
             out.puts
 
             if lang_result.warning_count > 0

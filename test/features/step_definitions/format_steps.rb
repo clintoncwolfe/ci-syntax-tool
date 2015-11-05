@@ -32,9 +32,27 @@ When(/^I run it on the command line with a destination in (the current directory
   @run_result = run_check(options)
 end
 
+When(/^I run it on the command line with the ([^ ]+) format on ([^ ]+) files$/) do |fmt_name, fixture|
+  path = "test/tmp/#{fmt_name}.out"
+  FileUtils.rm_f path
+  options = [
+    '--format', fmt_name,
+    '--output', path,
+    '--lang', 'YAML',
+    "test/fixtures/files/#{fixture}",
+  ]
+  @expected_output_paths = [ path ]
+  @run_result = run_check(options)
+end
+
 Then(/^I should get a list of the core formats along with a zero exit code$/) do
   assert_equal(0, @run_result[:exit_status])
   assert_format_list
+end
+
+Then(/^([^ ]+) should be included in the listed formats$/) do |fmt_name|
+  actual = @run_result[:stdout].split("\n")
+  assert_includes(actual, fmt_name)
 end
 
 Then(/^the file(?:s)? should be created$/) do

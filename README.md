@@ -80,9 +80,17 @@ Extend CI::Syntax::Tool::Language::Base, and use --require to include your libra
 
 So far, we support:
 
+### JUnit
+
+Produces an XML report that is jUnit/nUnit/SureFire compatible, probably.  Many CI engines can read this, but how they interpret it varies.
+
 ### Progress
 
 The default format.  Prints a '.', '*', or 'x' for each file that is clean, has nonzero warnings, or nonzero errors, respectively, followed by a list of problematic files.
+
+### Adding Your Own
+
+Extend CI::Syntax::Tool::Format::Base, and use --require to include your library.
 
 ## Bugs and Defects
 
