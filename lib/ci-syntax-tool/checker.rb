@@ -14,7 +14,10 @@ module CI
         end
 
         def run
-
+          unless cmd_line.runnable?
+            return cmd_line.non_runnable_exit_status
+          end
+          
           formats = []
           cmd_line.options[:formats].each_with_index do |fmt_name, idx|
             formats << FormatFactory.create(fmt_name, cmd_line.options[:outputs][idx])
