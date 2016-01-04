@@ -68,6 +68,7 @@ module CI
 
         def list_core_languages
           return [
+            'Python',
             'YAML',
           ]
         end
