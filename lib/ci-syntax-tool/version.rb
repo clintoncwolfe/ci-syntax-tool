@@ -4,7 +4,7 @@ module CI
     #   Simple container for namespacing the project.  Here, just the
     # version string.
     module Tool
-      VERSION = '0.2.0'
+      VERSION = '0.2.1'
     end
   end
 end
