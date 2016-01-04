@@ -11,11 +11,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.2.0] - 2015-11-05
 ### New Features
- - jUnit format
+ - Rake task
 
 ## [0.1.0] - 2015-11-05
 Initial release.
 
 ### New Features
  - YAML language support
+ - jUnit format
  - Progress format for interactive sessions
