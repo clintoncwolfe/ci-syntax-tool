@@ -28,7 +28,7 @@ Feature: Python Language support
      Then I should get a 1 exit code
      And the output should show only files for Python
      And the output should have 0 warnings
-     And the output should have 3 errors
+     And the output should have 1 errors
 
 
 
